@@ -155,7 +155,7 @@ internal class ReferenceLineDrawingView : UIView {
                 valueString += " \(units)"
             }
             
-            addLine(withTag: valueString, from: lineStart, to: lineEnd, in: path)
+            addLine(from: lineStart, to: lineEnd, in: path)
             
         } else {
             addLine(from: lineStart, to: lineEnd, in: path)

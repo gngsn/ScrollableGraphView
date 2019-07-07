@@ -80,13 +80,8 @@ internal class ReferenceLineDrawingView : UIView {
             let minLineStart = CGPoint(x: 0, y: self.bounds.height - bottomMargin)
             let minLineEnd = CGPoint(x: lineWidth, y: self.bounds.height - bottomMargin)
             
-            let numberFormatter = referenceNumberFormatter()
-            
-            let maxString = numberFormatter.string(from: self.currentRange.max as NSNumber)! + units
-            let minString = numberFormatter.string(from: self.currentRange.min as NSNumber)! + units
-            
-            addLine(withTag: maxString, from: maxLineStart, to: maxLineEnd, in: referenceLinePath)
-            addLine(withTag: minString, from: minLineStart, to: minLineEnd, in: referenceLinePath)
+            addLine(from: maxLineStart, to: maxLineEnd, in: referenceLinePath)
+            addLine(from: minLineStart, to: minLineEnd, in: referenceLinePath)
         }
         
         let initialRect = CGRect(x: self.bounds.origin.x, y: self.bounds.origin.y + topMargin, width: self.bounds.size.width, height: self.bounds.size.height - (topMargin + bottomMargin))
@@ -167,54 +162,54 @@ internal class ReferenceLineDrawingView : UIView {
         }
     }
     
-    private func addLine(withTag tag: String, from: CGPoint, to: CGPoint, in path: UIBezierPath) {
-        
-        let boundingSize = self.boundingSize(forText: tag)
-        let leftLabel = createLabel(withText: tag)
-        let rightLabel = createLabel(withText: tag)
-        
-        // Left label gap.
-        leftLabel.frame = CGRect(
-            origin: CGPoint(x: from.x + leftLabelInset, y: from.y - (boundingSize.height / 2)),
-            size: boundingSize)
-        
-        let leftLabelStart = CGPoint(x: leftLabel.frame.origin.x - labelMargin, y: to.y)
-        let leftLabelEnd = CGPoint(x: (leftLabel.frame.origin.x + leftLabel.frame.size.width) + labelMargin, y: to.y)
-        
-        // Right label gap.
-        rightLabel.frame = CGRect(
-            origin: CGPoint(x: (from.x + self.frame.width) - rightLabelInset - boundingSize.width, y: from.y - (boundingSize.height / 2)),
-            size: boundingSize)
-        
-        let rightLabelStart = CGPoint(x: rightLabel.frame.origin.x - labelMargin, y: to.y)
-        let rightLabelEnd = CGPoint(x: (rightLabel.frame.origin.x + rightLabel.frame.size.width) + labelMargin, y: to.y)
-        
-        // Add the lines and tags depending on the settings for where we want them.
-        var gaps = [(start: CGFloat, end: CGFloat)]()
-        
-        switch(self.settings.referenceLinePosition) {
-            
-        case .left:
-            gaps.append((start: leftLabelStart.x, end: leftLabelEnd.x))
-            self.addSubview(leftLabel)
-            self.labels.append(leftLabel)
-            
-        case .right:
-            gaps.append((start: rightLabelStart.x, end: rightLabelEnd.x))
-            self.addSubview(rightLabel)
-            self.labels.append(rightLabel)
-            
-        case .both:
-            gaps.append((start: leftLabelStart.x, end: leftLabelEnd.x))
-            gaps.append((start: rightLabelStart.x, end: rightLabelEnd.x))
-            self.addSubview(leftLabel)
-            self.addSubview(rightLabel)
-            self.labels.append(leftLabel)
-            self.labels.append(rightLabel)
-        }
-        
-        addLine(from: from, to: to, withGaps: gaps, in: path)
-    }
+//    private func addLine(withTag tag: String, from: CGPoint, to: CGPoint, in path: UIBezierPath) {
+//
+//        let boundingSize = self.boundingSize(forText: tag)
+//        let leftLabel = createLabel(withText: tag)
+//        let rightLabel = createLabel(withText: tag)
+//
+//        // Left label gap.
+//        leftLabel.frame = CGRect(
+//            origin: CGPoint(x: from.x + leftLabelInset, y: from.y - (boundingSize.height / 2)),
+//            size: boundingSize)
+//
+//        let leftLabelStart = CGPoint(x: leftLabel.frame.origin.x - labelMargin, y: to.y)
+//        let leftLabelEnd = CGPoint(x: (leftLabel.frame.origin.x + leftLabel.frame.size.width) + labelMargin, y: to.y)
+//
+//        // Right label gap.
+//        rightLabel.frame = CGRect(
+//            origin: CGPoint(x: (from.x + self.frame.width) - rightLabelInset - boundingSize.width, y: from.y - (boundingSize.height / 2)),
+//            size: boundingSize)
+//
+//        let rightLabelStart = CGPoint(x: rightLabel.frame.origin.x - labelMargin, y: to.y)
+//        let rightLabelEnd = CGPoint(x: (rightLabel.frame.origin.x + rightLabel.frame.size.width) + labelMargin, y: to.y)
+//
+//        // Add the lines and tags depending on the settings for where we want them.
+//        var gaps = [(start: CGFloat, end: CGFloat)]()
+//
+//        switch(self.settings.referenceLinePosition) {
+//
+//        case .left:
+//            gaps.append((start: leftLabelStart.x, end: leftLabelEnd.x))
+//            self.addSubview(leftLabel)
+//            self.labels.append(leftLabel)
+//
+//        case .right:
+//            gaps.append((start: rightLabelStart.x, end: rightLabelEnd.x))
+//            self.addSubview(rightLabel)
+//            self.labels.append(rightLabel)
+//
+//        case .both:
+//            gaps.append((start: leftLabelStart.x, end: leftLabelEnd.x))
+//            gaps.append((start: rightLabelStart.x, end: rightLabelEnd.x))
+//            self.addSubview(leftLabel)
+//            self.addSubview(rightLabel)
+//            self.labels.append(leftLabel)
+//            self.labels.append(rightLabel)
+//        }
+//
+//        addLine(from: from, to: to, withGaps: gaps, in: path)
+//    }
     
     private func addLine(from: CGPoint, to: CGPoint, withGaps gaps: [(start: CGFloat, end: CGFloat)], in path: UIBezierPath) {
         
@@ -307,6 +302,7 @@ internal class ReferenceLineDrawingView : UIView {
     private func createLabel(withText text: String) -> UILabel {
         let label = UILabel()
         
+        label.numberOfLines = 0
         label.text = text
         label.textColor = self.settings.referenceLineLabelColor
         label.font = self.settings.referenceLineLabelFont

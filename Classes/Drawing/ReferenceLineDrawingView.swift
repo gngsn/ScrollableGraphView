@@ -145,71 +145,8 @@ internal class ReferenceLineDrawingView : UIView {
     }
     
     private func createReferenceLineFrom(from lineStart: CGPoint, to lineEnd: CGPoint, in path: UIBezierPath) {
-        if(self.settings.shouldAddLabelsToIntermediateReferenceLines) {
-            
-            let value = calculateYAxisValue(for: lineStart)
-            let numberFormatter = referenceNumberFormatter()
-            var valueString = numberFormatter.string(from: value as NSNumber)!
-            
-            if(self.settings.shouldAddUnitsToIntermediateReferenceLineLabels) {
-                valueString += " \(units)"
-            }
-            
-            addLine(from: lineStart, to: lineEnd, in: path)
-            
-        } else {
-            addLine(from: lineStart, to: lineEnd, in: path)
-        }
+        addLine(from: lineStart, to: lineEnd, in: path)
     }
-    
-//    private func addLine(withTag tag: String, from: CGPoint, to: CGPoint, in path: UIBezierPath) {
-//
-//        let boundingSize = self.boundingSize(forText: tag)
-//        let leftLabel = createLabel(withText: tag)
-//        let rightLabel = createLabel(withText: tag)
-//
-//        // Left label gap.
-//        leftLabel.frame = CGRect(
-//            origin: CGPoint(x: from.x + leftLabelInset, y: from.y - (boundingSize.height / 2)),
-//            size: boundingSize)
-//
-//        let leftLabelStart = CGPoint(x: leftLabel.frame.origin.x - labelMargin, y: to.y)
-//        let leftLabelEnd = CGPoint(x: (leftLabel.frame.origin.x + leftLabel.frame.size.width) + labelMargin, y: to.y)
-//
-//        // Right label gap.
-//        rightLabel.frame = CGRect(
-//            origin: CGPoint(x: (from.x + self.frame.width) - rightLabelInset - boundingSize.width, y: from.y - (boundingSize.height / 2)),
-//            size: boundingSize)
-//
-//        let rightLabelStart = CGPoint(x: rightLabel.frame.origin.x - labelMargin, y: to.y)
-//        let rightLabelEnd = CGPoint(x: (rightLabel.frame.origin.x + rightLabel.frame.size.width) + labelMargin, y: to.y)
-//
-//        // Add the lines and tags depending on the settings for where we want them.
-//        var gaps = [(start: CGFloat, end: CGFloat)]()
-//
-//        switch(self.settings.referenceLinePosition) {
-//
-//        case .left:
-//            gaps.append((start: leftLabelStart.x, end: leftLabelEnd.x))
-//            self.addSubview(leftLabel)
-//            self.labels.append(leftLabel)
-//
-//        case .right:
-//            gaps.append((start: rightLabelStart.x, end: rightLabelEnd.x))
-//            self.addSubview(rightLabel)
-//            self.labels.append(rightLabel)
-//
-//        case .both:
-//            gaps.append((start: leftLabelStart.x, end: leftLabelEnd.x))
-//            gaps.append((start: rightLabelStart.x, end: rightLabelEnd.x))
-//            self.addSubview(leftLabel)
-//            self.addSubview(rightLabel)
-//            self.labels.append(leftLabel)
-//            self.labels.append(rightLabel)
-//        }
-//
-//        addLine(from: from, to: to, withGaps: gaps, in: path)
-//    }
     
     private func addLine(from: CGPoint, to: CGPoint, withGaps gaps: [(start: CGFloat, end: CGFloat)], in path: UIBezierPath) {
         

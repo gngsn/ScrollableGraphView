@@ -23,16 +23,6 @@ internal class ReferenceLineDrawingView : UIView {
         }
     }
     
-    private var units: String {
-        get {
-            if let units = self.settings.referenceLineUnits {
-                return " \(units)"
-            } else {
-                return ""
-            }
-        }
-    }
-    
     // Layers
     private var labels = [UILabel]()
     private let referenceLineLayer = CAShapeLayer()
@@ -61,7 +51,7 @@ internal class ReferenceLineDrawingView : UIView {
     private func createLabel(at position: CGPoint, withText text: String) -> UILabel {
         let frame = CGRect(x: position.x, y: position.y, width: 0, height: 0)
         let label = UILabel(frame: frame)
-        
+        label.numberOfLines = 0
         return label
     }
     

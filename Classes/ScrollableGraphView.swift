@@ -178,6 +178,10 @@ import UIKit
         // Add the drawing view in which we draw all the plots.
         drawingView = UIView(frame: viewport)
         drawingView.backgroundColor = backgroundFillColor
+        self.addSubview(drawingView)
+        
+        // Add the x-axis labels view.
+        self.insertSubview(labelsView, aboveSubview: drawingView)
         
         
         // 2.
@@ -246,11 +250,7 @@ import UIKit
         if(referenceLines != nil) {
             addReferenceViewDrawingView()
         }
-        self.addSubview(drawingView)
-        
-        // Add the x-axis labels view.
-        self.insertSubview(labelsView, aboveSubview: drawingView)
-        
+
         // 7.
         // We're now done setting up, update the offsets and change the flag.
         

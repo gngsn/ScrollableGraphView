@@ -249,6 +249,7 @@ import UIKit
         if(referenceLines != nil) {
             addReferenceViewDrawingView()
         }
+        self.addSubview(drawingView)
         
         // 7.
         // We're now done setting up, update the offsets and change the flag.
@@ -258,7 +259,7 @@ import UIKit
         
         // Set the first active points interval. These are the points that are visible when the view loads.
         self.activePointsInterval = initialActivePointsInterval
-         self.addSubview(drawingView)
+         
     }
     
     // TODO in 4.1: Plot layer ordering.

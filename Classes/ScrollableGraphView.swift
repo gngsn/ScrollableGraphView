@@ -178,7 +178,7 @@ import UIKit
         // Add the drawing view in which we draw all the plots.
         drawingView = UIView(frame: viewport)
         drawingView.backgroundColor = backgroundFillColor
-        self.addSubview(drawingView)
+       
         
         // Add the x-axis labels view.
         self.insertSubview(labelsView, aboveSubview: drawingView)
@@ -258,6 +258,7 @@ import UIKit
         
         // Set the first active points interval. These are the points that are visible when the view loads.
         self.activePointsInterval = initialActivePointsInterval
+         self.addSubview(drawingView)
     }
     
     // TODO in 4.1: Plot layer ordering.
